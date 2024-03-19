@@ -14,26 +14,39 @@ main(int argc, char *argv[])
 	if (numero < 0) {
 		printf("no se aceptan numeros menores a 0");
 	}
-	pid_t pid = fork();
 
-	if (pid == 0) {
-		// hijo
-		// usa el primer numero que le llega como filtro (ese numero que le llega tmb es primo)
-	} else {
-		// padre
-	}
-
-	int *filedescs_padre_hijo[2];
-	int *filedescs_hijo_padre[2];
+	int filedescs_padre_hijo[2];
+	int filedescs_hijo_padre[2];
 	pipe(filedescs_padre_hijo);
 	pipe(filedescs_hijo_padre);
 
-	for (int i = 0; i < numero; i++) {
-		printf("%i \n", i + 2);
-		if ((i + 2) % 2 != 0) {
-			write(filedescs_padre_hijo[FD_WRITE], i + 2, sizeof(i + 2));
-		}
+	pid_t pid = fork();
 
-		return 0;
+	if (pid == 0) {
+		close(filedescs_padre_hijo[FD_WRITE]);
+		int numero_filtro;
+		int numero_actual;
+		if (numero_actual % numero_filtro != 0) {
+		}
+		read(filedescs_padre_hijo[FD_READ],
+		     &numero_filtro,
+		     sizeof(numero_filtro));
+		printf("primo: %i \n", numero_filtro);
+
+		// hijo
+		// usa el primer numero que le llega como filtro (ese numero que le llega tmb es primo)
+	} else {
+		for (int i = 0; i < numero; i++) {
+			close(filedescs_padre_hijo[FD_READ]);
+			int numero_actual = i + 2;
+			if ((numero_actual) % 1 == 0) {
+				write(filedescs_padre_hijo[FD_WRITE],
+				      &numero_actual,
+				      sizeof(numero_actual));
+			}
+
+			return 0;
+		}
+		// padre
 	}
 }
