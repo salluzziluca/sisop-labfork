@@ -49,7 +49,7 @@ create_filter(int read_fd)
 	}
 
 	close(fd[WRITE_END]);
-	wait(2);
+	wait(NULL);
 }
 
 int
@@ -75,6 +75,6 @@ main(int argc, char *argv[])
 	}
 
 	close(fd[WRITE_END]);
-	wait(2);
+	wait(NULL);
 	return 0;
 }
